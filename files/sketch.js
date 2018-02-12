@@ -1,50 +1,63 @@
 var counter = 0;
-var timeLeft = 5;
+var timeLeft = 61;
 var squares = [];
-var newSquare;
+var flagged = false;
 
+//handles number format of timer
 function convertSeconds(s){
   var min = floor (s/60);
   var sec = s % 60;
   return nf(min,2) + ':' + nf(sec,2);
 }
 
+//initialisation of the page
 function setup() {
-  createCanvas(600, 400);
   background(51);
-  squares.push(new Square());
-  console.log(squares);
-  for (i=0; i<10; i++){
-    newSquare = new Square();
-    console.log(newSquare.colour);
-    console.log(squares);
-    if(squares[i].colour == newSquare.colour){
-      console.log("Duplicate!");
-        continue;
-    }else{
-      squares[i] = newSquare;
-    }
+
+  button = createButton('Start!');
+  button.parent('start-button');
+  button.mousePressed(run);
+}
+
+function run(){
+  button.hide();
+
+  var canvas = createCanvas(600, 400);
+  canvas.parent('sketch-holder');
+  background(51);
+  timeIt();
+
+  randomiseSquares();
+}
+
+//create an amount of random squares
+function randomiseSquares(){
+  for(i=0;i<=5;i++){
+    var tempSquare = new Square();
+    console.log(tempSquare);
+    squares.push(tempSquare);
   }
+}
 
 
-  //timer handling
+//timer handling
+function timeIt(){
+  //gets the html element by id
   var timer = select('#timer');
-  timer.html("Time Remaining: " + convertSeconds(timeLeft - counter ));
-  function timeIt(){
-    if(timeLeft - counter <= 0){
-      timer.html("Times up!");
-    }else{
-    counter++;
-    timer.html("Time Remaining: " + convertSeconds(timeLeft - counter ));
-    }
-  }
 
-  setInterval(timeIt, 1000);
+  //calculates if time is up or not
+  if(timeLeft - counter <= 0){
+    timer.html("Times up!");
+  }else{
+  counter++;
+  timer.html("Time Remaining: " + convertSeconds(timeLeft - counter ));
+  }
+}
+//end of timer handling
 
 //draw all objects on the page
 function draw(){
-  for (i=0; i<squares.length;i++){
-    squares[i].show();
-  }
+
 }
-}
+
+setInterval(timeIt, 1000);
