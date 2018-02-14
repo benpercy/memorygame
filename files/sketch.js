@@ -3,6 +3,7 @@ var timeLeft = 61;
 var squares = [];
 var flagged = false;
 
+
 //handles number format of timer
 function convertSeconds(s){
   var min = floor (s/60);
@@ -58,6 +59,12 @@ function timeIt(){
 //draw all objects on the page
 function draw(){
 
+}
+
+document.getElementById("insert-button").onclick = function() {myFunction()};
+
+function myFunction() {
+    document.getElementById("insert-button").innerHTML = "YOU CLICKED ME!";
 }
 
 setInterval(timeIt, 1000);
